@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kstarrain.provider.persistence.mappers.UserMapper">
+	
+	<resultMap id="BaseResultMap" type="com.kstarrain.provider.persistence.entities.User">
+			<id column="id" property="id" />
+			<result column="name" property="name" />
+			<result column="age" property="age" />
+			<result column="birthday" property="birthday" />
+			<result column="deposit" property="deposit" />
+			<result column="create_user" property="createUser" />
+			<result column="create_date" property="createDate" />
+			<result column="update_user" property="updateUser" />
+			<result column="update_date" property="updateDate" />
+			<result column="alive_flag" property="aliveFlag" />
+	</resultMap>
+
+
+    <sql id="Base_Column_List" >
+            id,
+            name,
+            age,
+            birthday,
+            deposit,
+            create_user,
+            create_date,
+            update_user,
+            update_date,
+            alive_flag
+    </sql>
+
+
+    <sql id="Base_Selective_Where" >
+		alive_flag = 1
+		<if test="id != null">AND id = #{id}</if>
+		<if test="name != null and name != ''">AND name = #{name}</if>
+		<if test="age != null">AND age = #{age}</if>
+		<if test="birthday != null">AND birthday = #{birthday}</if>
+		<if test="deposit != null and deposit != ''">AND deposit = #{deposit}</if>
+		<if test="createUser != null and createUser != ''">AND create_user = #{createUser}</if>
+		<if test="createDate != null">AND create_date = #{createDate}</if>
+		<if test="updateUser != null and updateUser != ''">AND update_user = #{updateUser}</if>
+		<if test="updateDate != null">AND update_date = #{updateDate}</if>
+
+    </sql>
+
+
+
+    <insert id="insertSelective" parameterType="com.kstarrain.provider.persistence.entities.User"  keyProperty="id" useGeneratedKeys="true">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null" >id, </if>
+			<if test="name != null" >name, </if>
+			<if test="age != null" >age, </if>
+			<if test="birthday != null" >birthday, </if>
+			<if test="deposit != null" >deposit, </if>
+			<if test="createUser != null" >create_user, </if>
+			<if test="createDate != null" >create_date, </if>
+			<if test="updateUser != null" >update_user, </if>
+			<if test="updateDate != null" >update_date, </if>
+			<if test="aliveFlag != null" >alive_flag, </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null" >#{id}, </if>
+			<if test="name != null" >#{name}, </if>
+			<if test="age != null" >#{age}, </if>
+			<if test="birthday != null" >#{birthday}, </if>
+			<if test="deposit != null" >#{deposit}, </if>
+			<if test="createUser != null" >#{createUser}, </if>
+			<if test="createDate != null" >#{createDate}, </if>
+			<if test="updateUser != null" >#{updateUser}, </if>
+			<if test="updateDate != null" >#{updateDate}, </if>
+			<if test="aliveFlag != null" >#{aliveFlag}, </if>
+        </trim>
+    </insert>
+
+	
+    <insert id="insertBatch" >
+        INSERT INTO t_user
+			(
+			<include refid="Base_Column_List" />
+			)
+        VALUES
+			<foreach collection="recordList" index="index" item="item" separator="," >
+			(
+			#{item.id},
+			#{item.name},
+			#{item.age},
+			#{item.birthday},
+			#{item.deposit},
+			#{item.createUser},
+			#{item.createDate},
+			#{item.updateUser},
+			#{item.updateDate},
+			#{item.aliveFlag}
+			)
+			</foreach>
+    </insert>
+
+
+    <delete id="deleteByPrimaryKey" >
+        DELETE FROM
+			t_user
+        WHERE 
+		    id = #{id}
+    </delete>
+
+	
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.kstarrain.provider.persistence.entities.User">
+		UPDATE
+			t_user
+		<set>
+			<if test="id != null">id = #{id},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="age != null">age = #{age},</if>
+			<if test="birthday != null">birthday = #{birthday},</if>
+			<if test="deposit != null">deposit = #{deposit},</if>
+			<if test="createUser != null">create_user = #{createUser},</if>
+			<if test="createDate != null">create_date = #{createDate},</if>
+			<if test="updateUser != null">update_user = #{updateUser},</if>
+			<if test="updateDate != null">update_date = #{updateDate},</if>
+			<if test="aliveFlag != null">alive_flag = #{aliveFlag},</if>
+		</set>
+        WHERE 
+		    id = #{id}
+	</update>
+
+
+    <select id="countSelective" parameterType="com.kstarrain.provider.persistence.entities.User" resultType="int">
+        SELECT
+        	count(1)
+        FROM
+			t_user
+        <where>
+            <include refid="Base_Selective_Where" />
+        </where>
+    </select>
+	
+
+    <select id="queryByPrimaryKey" resultMap="BaseResultMap">
+        SELECT
+        	<include refid="Base_Column_List" />
+        FROM
+			t_user
+        WHERE 
+	        id = #{id}
+	</select>
+
+
+    <select id="querySelective" parameterType="com.kstarrain.provider.persistence.entities.User" resultMap="BaseResultMap">
+        SELECT
+        	<include refid="Base_Column_List" />
+        FROM
+			t_user
+        <where>
+            <include refid="Base_Selective_Where" />
+        </where>
+    </select>
+
+
+    <select id="queryByNames" resultMap="BaseResultMap">
+		SELECT
+			<include refid="Base_Column_List" />
+		FROM
+			t_user
+		WHERE
+			alive_flag = 1
+			AND name IN
+			<foreach collection="names" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+	</select>
+
+</mapper>
