@@ -28,7 +28,7 @@ public class User implements Serializable{
 	
 	/** 生日 */
 	private Date birthday;
-	
+
 	/** 存款 */
 	private BigDecimal deposit;
 	
@@ -46,7 +46,7 @@ public class User implements Serializable{
 	
 	/** 数据存活标记 */
 	private Integer aliveFlag;
-	
+
 		
 	
 		

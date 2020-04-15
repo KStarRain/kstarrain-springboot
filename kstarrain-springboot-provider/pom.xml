@@ -92,8 +92,7 @@
             <version>2.6</version>
         </dependency>
 
-
-        <!-- 单个bean转换（性能差，弃用） -->
+        <!-- bean转换(如ConvertUtils) -->
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>

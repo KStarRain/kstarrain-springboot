@@ -27,7 +27,7 @@ public class BeanConvertUtilsTest {
     public void test1(){
 
         List<User> users = new ArrayList<>();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 1000000; i++) {
             User user = new User();
             user.setId(1);
             user.setName("貂蝉");
@@ -59,19 +59,17 @@ public class BeanConvertUtilsTest {
 
 
         long start5 = System.currentTimeMillis();
-        List<UserDTO> result5 = BeanConvertUtils.beanToBeanInList(users, UserDTO.class);
+        List<UserDTO> result5 = BeanConvertUtils.beanToBeanInList(users, UserDTO.class, DateConverter.builder().addPattern("birthday","yyyy-MM-dd HH:mm:ss").build());
         long end5 = System.currentTimeMillis();
         log.info("{}条数据耗时{}毫秒，BeanCopier.copy()", result5.size(), end5 - start5);
         result5.get(0).setId("222");
 
 
-        long start6 = System.currentTimeMillis();
-        List<Map<String, Object>> result6 = BeanConvertUtils.beanToMapInList(users);
-        long end6 = System.currentTimeMillis();
-        log.info("{}条数据耗时{}毫秒，BeanMap.create()", result6.size(), end6 - start6);
+//        long start6 = System.currentTimeMillis();
+//        List<Map<String, Object>> result6 = BeanConvertUtils.beanToMapInList(users);
+//        long end6 = System.currentTimeMillis();
+//        log.info("{}条数据耗时{}毫秒，BeanMap.create()", result6.size(), end6 - start6);
 
-
-        List<UserDTO> users1 = BeanConvertUtils.mapToBeanInList(result6, UserDTO.class);
         log.info("-----------------------------------------------");
 
     }
@@ -93,6 +91,7 @@ public class BeanConvertUtilsTest {
         src.setUpdateDate(new Date());
         src.setAliveFlag(AliveFlagEnum.ENABLED.getCode());
 
+//        UserDTO userDTO = BeanConvertUtils.beanToBean(src, UserDTO.class);
         log.info("-----------------------------------------------");
 
         Map<String, Object> map = BeanConvertUtils.beanToMap(src);
@@ -101,6 +100,7 @@ public class BeanConvertUtilsTest {
         user.setId(6000);
         log.info("-----------------------------------------------");
 
+        User build = User.builder().age(1).build();
     }
 
 
@@ -122,4 +122,29 @@ public class BeanConvertUtilsTest {
         log.info("-----------------------------------------------");
 
     }
+
+
+    @Test
+    public void test4(){
+
+        User src = new User();
+        src.setId(1);
+        src.setName("貂蝉");
+        src.setAge(20);
+        src.setBirthday(new Date());
+        src.setDeposit(new BigDecimal("521.34"));
+        src.setCreateUser(Constants.SYSTEM);
+        src.setCreateDate(new Date());
+        src.setUpdateUser(Constants.SYSTEM);
+        src.setUpdateDate(new Date());
+        src.setAliveFlag(AliveFlagEnum.ENABLED.getCode());
+
+        UserDTO userDTO = BeanConvertUtils.beanToBean(src, UserDTO.class,
+                DateConverter.builder().addPattern("birthday","yyyy-MM-dd HH:mm:ss").build());
+
+
+
+        System.out.println();
+    }
+
 }
