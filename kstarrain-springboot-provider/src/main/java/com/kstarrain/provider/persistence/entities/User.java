@@ -19,7 +19,7 @@ public class User implements Serializable{
 	
 	/** 主键 */
 	private Integer id;
-	
+
 	/** 姓名 */
 	private String name;
 	

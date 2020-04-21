@@ -44,13 +44,14 @@ public class BeanConvertUtilsTest {
 
         log.info("-----------------------------------------------");
 
+        BeanConvertOldUtils.beanToBean(users.get(0), UserDTO.class);
 
-//        long start2 = System.currentTimeMillis();
-//        List<UserDTO> result2 = BeanConvertOldUtils.beanToBeanInList(users, UserDTO.class);
+        long start2 = System.currentTimeMillis();
+        List<UserDTO> result2 = BeanConvertOldUtils.beanToBeanInList(users, UserDTO.class);
 //        result2.get(0).setId("222");
-//        long end2 = System.currentTimeMillis();
-//        log.info("{}条数据耗时{}毫秒，BeanUtils.copyProperties()", result2.size(), end2 - start2);
-//
+        long end2 = System.currentTimeMillis();
+        log.info("{}条数据耗时{}毫秒，BeanUtils.copyProperties()", result2.size(), end2 - start2);
+
 
 //        long start3 = System.currentTimeMillis();
 //        List<UserDTO> result3 = users.stream().map(user -> BeanConvertOldUtils.beanToBeanEffective(user, UserDTO.class)).collect(Collectors.toList());
@@ -62,7 +63,7 @@ public class BeanConvertUtilsTest {
         List<UserDTO> result5 = BeanConvertUtils.beanToBeanInList(users, UserDTO.class, DateConverter.builder().addPattern("birthday","yyyy-MM-dd HH:mm:ss").build());
         long end5 = System.currentTimeMillis();
         log.info("{}条数据耗时{}毫秒，BeanCopier.copy()", result5.size(), end5 - start5);
-        result5.get(0).setId("222");
+//        result5.get(0).setId("222");
 
 
 //        long start6 = System.currentTimeMillis();

@@ -6,6 +6,9 @@ import com.kstarrain.api.url.UrlMapping;
 import com.kstarrain.framework.api.dto.response.PageResultDTO;
 import com.kstarrain.framework.api.dto.response.ResultDTO;
 import com.kstarrain.provider.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +25,7 @@ import java.text.ParseException;
  * @create: 2020-04-10 15:32
  * @description:
  */
+@Api(tags = "用户相关接口")
 @RestController
 public class UserController {
 
@@ -34,8 +38,9 @@ public class UserController {
      * @param file
      * @return
      */
+    @ApiOperation(value = "导入用户数据")
     @PostMapping(value = UrlMapping.USER_IMPORT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResultDTO<Integer> importDitch(@RequestParam(value = "file") MultipartFile file) throws ParseException, ReflectiveOperationException, IOException {
+    public ResultDTO<Integer> importDitch(@ApiParam("用户excel/csv文件") @RequestParam(value = "file") MultipartFile file) throws ParseException, ReflectiveOperationException, IOException {
         return new ResultDTO<>(userService.importUser(file));
     }
 
@@ -45,6 +50,7 @@ public class UserController {
      * @param requestBody
      * @return
      */
+    @ApiOperation(value = "条件查询用户列表")
     @PostMapping(value = UrlMapping.USER_LIST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public PageResultDTO<UserDTO> queryUserList(@RequestBody UserQueryReq requestBody) {
         return userService.queryUserPageList(requestBody);
@@ -52,10 +58,11 @@ public class UserController {
 
 
     /**
-     * 条件查询用户列表
+     * 导出用户列表
      * @param requestBody
      * @return
      */
+    @ApiOperation(value = "导出用户列表")
     @PostMapping(value = UrlMapping.USER_EXPORT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResultDTO<Integer> exportUserList(@RequestBody UserQueryReq requestBody) {
         return new ResultDTO<>(userService.exportUserList(requestBody));

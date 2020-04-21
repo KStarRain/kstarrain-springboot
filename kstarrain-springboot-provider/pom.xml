@@ -99,6 +99,13 @@
             <version>1.9.3</version>
         </dependency>
 
+        <!-- fastJson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.68</version>
+        </dependency>
+
         <!--&lt;!&ndash; cglib (不在spring环境下的BeanCopier包) &ndash;&gt;-->
         <!--<dependency>-->
             <!--<groupId>cglib</groupId>-->
@@ -134,6 +141,29 @@
             <artifactId>wanda-framework-elastic-job</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <!-- swagger-ui  页面地址：http://localhost:8176/kstarrain-springboot/swagger-ui.html#!/ -->
+        <!--<dependency>-->
+            <!--<groupId>io.springfox</groupId>-->
+            <!--<artifactId>springfox-swagger-ui</artifactId>-->
+            <!--<version>2.9.2</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>io.springfox</groupId>-->
+            <!--<artifactId>springfox-bean-validators</artifactId>-->
+            <!--<version>2.9.2</version>-->
+        <!--</dependency>-->
+
+        <!-- swagger-bootstrap-ui 页面好看
+            源码地址：https://github.com/xiaoymin/swagger-bootstrap-ui/
+            页面地址：http://localhost:8176/kstarrain-springboot/doc.html -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+
 
 
     </dependencies>
