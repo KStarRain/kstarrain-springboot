@@ -5,6 +5,7 @@ import com.kstarrain.api.dto.response.UserDTO;
 import com.kstarrain.framework.api.dto.response.PageResultDTO;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -19,5 +20,5 @@ public interface UserService {
 
     PageResultDTO<UserDTO> queryUserPageList(UserQueryReq requestBody);
 
-    int exportUserList(UserQueryReq requestBody);
+    void exportUserList(UserQueryReq requestBody, HttpServletResponse response) throws ReflectiveOperationException, IOException;
 }

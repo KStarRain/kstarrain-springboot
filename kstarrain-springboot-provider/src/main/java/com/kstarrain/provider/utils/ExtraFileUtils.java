@@ -10,14 +10,14 @@ import java.io.File;
  * @description:
  */
 @Slf4j
-public class ExtraFileUtils {
+public class ExtraFileUtils{
 
     public static boolean isCsvFile(String filePath) {
         String suffix = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
         return ".csv".equals(suffix);
     }
 
-    public static boolean deleteFile(File file) {
+    public static boolean deleteExistFile(File file) {
         try {
             if (file != null && file.isFile() && file.exists()) {
                 return file.delete();

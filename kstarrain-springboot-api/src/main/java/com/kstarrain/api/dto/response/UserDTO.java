@@ -1,31 +1,31 @@
 package com.kstarrain.api.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
+@ApiModel("用户信息")
 public class UserDTO {
 
-	/** 主键 */
+	@ApiModelProperty(value = "ID", required = true, example = "1", position = 1)
 	private String id;
 
-	/** 姓名 */
+	@ApiModelProperty(value = "姓名", required = true, example = "貂蝉", position = 2)
 	private String name;
 	
-	/** 年龄 */
+	@ApiModelProperty(value = "年龄", required = true, example = "20", position = 3)
 	private Integer age;
 	
-	/** 生日 */
+	@ApiModelProperty(value = "生日", required = true, example = "1998-12-12", position = 4)
 	@JsonFormat(pattern="yyyy-MM-dd", timezone = "GMT+8")
 	private Date birthday;
 
-	/** 生日 */
-	private String birthdayStr;
-
-	/** 存款 */
+	@ApiModelProperty(value = "存款", required = true, example = "528.12", position = 5)
 	private BigDecimal deposit;
 
 }

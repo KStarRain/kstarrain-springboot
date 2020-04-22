@@ -11,12 +11,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -52,20 +50,30 @@ public class UserController {
      */
     @ApiOperation(value = "条件查询用户列表")
     @PostMapping(value = UrlMapping.USER_LIST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public PageResultDTO<UserDTO> queryUserList(@RequestBody UserQueryReq requestBody) {
+    public PageResultDTO<UserDTO> queryUserList(@ApiParam("查询条件") @RequestBody UserQueryReq requestBody) {
         return userService.queryUserPageList(requestBody);
     }
 
+    /**
+     * 导出用户列表
+     * @param response
+     */
+    @ApiOperation(value = "导出用户列表")
+    @GetMapping(value = UrlMapping.USER_EXPORT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void exportUserList2(HttpServletResponse response) throws IOException, ReflectiveOperationException {
+        userService.exportUserList(new UserQueryReq(), response);
+    }
 
     /**
      * 导出用户列表
      * @param requestBody
-     * @return
+     * @param response
      */
     @ApiOperation(value = "导出用户列表")
     @PostMapping(value = UrlMapping.USER_EXPORT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResultDTO<Integer> exportUserList(@RequestBody UserQueryReq requestBody) {
-        return new ResultDTO<>(userService.exportUserList(requestBody));
+    public void exportUserList(@RequestBody UserQueryReq requestBody,
+                               HttpServletResponse response) throws IOException, ReflectiveOperationException {
+        userService.exportUserList(requestBody, response);
     }
 
 
