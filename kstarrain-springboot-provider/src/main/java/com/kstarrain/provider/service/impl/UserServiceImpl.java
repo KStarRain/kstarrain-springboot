@@ -49,6 +49,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public int importUser(MultipartFile file) throws ParseException, ReflectiveOperationException, IOException {
 
+        if (file == null || file.isEmpty()){
+            throw new BizException(BizErrorCode.INCORRECT_PARAMETERS);
+        }
+
         Map<String, String> titlePropertyMap = new LinkedHashMap<>();
         titlePropertyMap.put("姓名", "name");
         titlePropertyMap.put("年龄", "age");
@@ -111,7 +115,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageResultDTO<UserDTO> queryUserPageList(UserQueryReq requestBody) {
-
         User criteria = BeanConvertUtils.beanToBean(requestBody, User.class);
         PagingUtils.startPage(requestBody.toPageInfo());
         List<User> users = userMapper.querySelective(criteria);

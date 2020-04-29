@@ -9,9 +9,13 @@ import com.kstarrain.provider.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +27,7 @@ import java.text.ParseException;
  * @create: 2020-04-10 15:32
  * @description:
  */
+@Slf4j
 @Api(tags = "用户相关接口")
 @RestController
 public class UserController {
@@ -54,15 +59,6 @@ public class UserController {
         return userService.queryUserPageList(requestBody);
     }
 
-    /**
-     * 导出用户列表
-     * @param response
-     */
-    @ApiOperation(value = "导出用户列表")
-    @GetMapping(value = UrlMapping.USER_EXPORT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void exportUserList2(HttpServletResponse response) throws IOException, ReflectiveOperationException {
-        userService.exportUserList(new UserQueryReq(), response);
-    }
 
     /**
      * 导出用户列表
@@ -71,10 +67,33 @@ public class UserController {
      */
     @ApiOperation(value = "导出用户列表")
     @PostMapping(value = UrlMapping.USER_EXPORT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void exportUserList(@RequestBody UserQueryReq requestBody,
+    public void exportUserList(@ApiParam("导出条件") @RequestBody UserQueryReq requestBody,
                                HttpServletResponse response) throws IOException, ReflectiveOperationException {
         userService.exportUserList(requestBody, response);
     }
 
+    /**
+     * 导入用户数据
+     * @return
+     */
+    @ApiOperation(value = "测试 application/x-www-form-urlencoded")
+    @PostMapping(value = "/test1", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResultDTO<Integer> test1(@RequestParam("a") String a,
+                                   @RequestParam("b") String b) {
+        log.info("a:{},b:{}",a,b);
+        return new ResultDTO<>();
+    }
+
+    /**
+     * 导入用户数据
+     * @return
+     */
+    @ApiOperation(value = "测试 multipart/form-data")
+    @PostMapping(value = "/test2", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResultDTO<Integer> test2(@RequestParam("a") String a,
+                                   @RequestParam("b") String b) {
+        log.info("a:{},b:{}",a,b);
+        return new ResultDTO<>();
+    }
 
 }

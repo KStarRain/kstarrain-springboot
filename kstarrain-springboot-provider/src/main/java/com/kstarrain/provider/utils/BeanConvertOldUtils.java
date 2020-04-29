@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
  * @create: 2019-04-24 14:58
  * @description: Bean转换工具类
  */
+@Deprecated
 public final class BeanConvertOldUtils {
 
     private static final Log log = LogFactory.getLog(BeanConvertOldUtils.class);

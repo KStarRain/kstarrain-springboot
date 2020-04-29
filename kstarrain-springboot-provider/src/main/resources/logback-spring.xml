@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
-    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <!--<include resource="org/springframework/boot/logging/logback/console-appender.xml" />-->
 
-    <!-- 输出文件中含有user变量，通过代码MDC.put("userId","xxxxxx");设置 -->
+    <!-- 日志中含有request_id变量，通过代码MDC.put("request_id","xxxxxx");设置 -->
+
+    <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} [REQ-%X{request_id}] %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+
+    <!-- 输出文件中含有ReqId变量，通过代码MDC.put("reqId","xxxxxx");设置 -->
     <!--<property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] \\(%c.%M:%L\\) : [W-%X{wechatUserId}] [U-%X{userId}] %m%n"/>-->
-    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p  --- [%15.15t] %-40.40logger{39} : [W-%X{wechatUserId}] [U-%X{userId}] %m%n" />
-
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p  --- [%15.15t] %-40.40logger{39} : [REQ-%X{request_id}]  %m%n" />
     <springProfile name="local,dev">
-        <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p  --- [%15.15t] %-40.40logger{39} : [W-%X{wechatUserId}] [U-%X{userId}] %m%n" />
+        <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p  --- [%15.15t] %-40.40logger{39} : [REQ-%X{request_id}] %m%n" />
     </springProfile>
 
     <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
-
-
     <!-- RollingFileAppender：滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 -->
     <appender name="TIME_BASED_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_FILE}</file>
