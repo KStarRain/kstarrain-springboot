@@ -1,11 +1,13 @@
 package com.kstarrain.provider.exception.handler;
 
 import com.kstarrain.framework.api.dto.response.ResultDTO;
+import com.kstarrain.provider.enums.LogKeyEnum;
 import com.kstarrain.provider.exception.BizErrorCode;
 import com.kstarrain.provider.exception.BizException;
 import com.kstarrain.provider.utils.JacksonUtils;
 import com.kstarrain.provider.utils.RequestUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.boot.autoconfigure.web.AbstractErrorController;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.http.ResponseEntity;
@@ -35,27 +37,32 @@ public class GlobalExceptionHandler extends AbstractErrorController {
     @RequestMapping(value = ERROR_PATH)
     public ResponseEntity<ResultDTO> errorHandler(HttpServletRequest request) {
 
-        Throwable e = (Throwable) request.getAttribute("javax.servlet.error.exception");
+        try {
+            Throwable e = (Throwable) request.getAttribute("javax.servlet.error.exception");
 
-        Map<String, Object> attributes = getErrorAttributes(request, false);
-        String url = RequestUtils.getURL(request, false) + attributes.get("path");
+            Map<String, Object> attributes = getErrorAttributes(request, false);
+            String url = RequestUtils.getURL(request, false) + attributes.get("path");
 
-        ResultDTO result = new ResultDTO();
-        result.setSuccess(false);
-        result.setCode(BizErrorCode.SYSTEM_ERROR.getCode());
-        result.setMessage(BizErrorCode.SYSTEM_ERROR.getMessage());
+            ResultDTO result = new ResultDTO();
+            result.setSuccess(false);
+            result.setCode(BizErrorCode.SYSTEM_ERROR.getCode());
+            result.setMessage(BizErrorCode.SYSTEM_ERROR.getMessage());
 
-        if (e == null) {
-            log.error("【filter-系统异常】-- url:{},  异常信息：{}", url, JacksonUtils.toJSONString(attributes));
-        } else if (e instanceof BizException) {
-            result.setCode(((BizException) e).getErrorCode());
-            result.setMessage(((BizException) e).getErrorMessage());
-            log.error("【filter-业务异常】-- url:{},  异常信息：[{}] [{}]", url, ((BizException) e).getErrorCode(),((BizException) e).getErrorMessage());
-        } else {
-            log.error("【filter-系统异常】-- url:{},  异常信息：{}", url, e.getMessage(), e);
+            if (e == null) {
+                log.error("【filter-系统异常】-- url:{},  异常信息：{}", url, JacksonUtils.toJSONString(attributes));
+            } else if (e instanceof BizException) {
+                result.setCode(((BizException) e).getErrorCode());
+                result.setMessage(((BizException) e).getErrorMessage());
+                log.error("【filter-业务异常】-- url:{},  异常信息：[{}] [{}]", url, ((BizException) e).getErrorCode(),((BizException) e).getErrorMessage());
+            } else {
+                log.error("【filter-系统异常】-- url:{},  异常信息：{}", url, e.getMessage(), e);
+            }
+
+            return ResponseEntity.ok().body(result);
+        } finally {
+            // 清除日志中的 request_id
+            MDC.remove(LogKeyEnum.REQUEST_ID.getCode());
         }
-
-        return ResponseEntity.ok().body(result);
     }
 
 

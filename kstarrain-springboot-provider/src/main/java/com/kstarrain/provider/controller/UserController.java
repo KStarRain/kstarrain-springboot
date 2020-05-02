@@ -5,6 +5,7 @@ import com.kstarrain.api.dto.response.UserDTO;
 import com.kstarrain.api.url.UrlMapping;
 import com.kstarrain.framework.api.dto.response.PageResultDTO;
 import com.kstarrain.framework.api.dto.response.ResultDTO;
+import com.kstarrain.provider.aspect.annotation.PrintAspectLog;
 import com.kstarrain.provider.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,7 @@ import java.text.ParseException;
  * @description:
  */
 @Slf4j
+@PrintAspectLog
 @Api(tags = "用户相关接口")
 @RestController
 public class UserController {
@@ -53,6 +55,7 @@ public class UserController {
      * @param requestBody
      * @return
      */
+//    @ExcludeAspectLog
     @ApiOperation(value = "条件查询用户列表")
     @PostMapping(value = UrlMapping.USER_LIST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public PageResultDTO<UserDTO> queryUserList(@ApiParam("查询条件") @RequestBody UserQueryReq requestBody) {
