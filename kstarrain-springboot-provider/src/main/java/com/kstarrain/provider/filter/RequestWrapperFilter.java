@@ -1,7 +1,7 @@
 package com.kstarrain.provider.filter;
 
+import com.kstarrain.framework.common.utils.UUIDUtils;
 import com.kstarrain.provider.enums.LogKeyEnum;
-import com.kstarrain.provider.utils.KeyGenUtils;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -25,7 +25,7 @@ public class RequestWrapperFilter extends OncePerRequestFilter {
 
 
         // 日志中设置 request_id
-        MDC.put(LogKeyEnum.REQUEST_ID.getCode(), KeyGenUtils.newUuid());
+        MDC.put(LogKeyEnum.REQUEST_ID.getCode(), UUIDUtils.newUuid());
 
         /** HttpServletRequest 请求中的 body 内容仅能调用 request.getInputStream()，request.getReader()和request.getParameter("key") 方法读取一次，
          *  重复读取会报 java.io.IOException: Stream closed 异常

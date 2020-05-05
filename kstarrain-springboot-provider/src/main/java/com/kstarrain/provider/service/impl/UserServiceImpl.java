@@ -3,6 +3,9 @@ package com.kstarrain.provider.service.impl;
 import com.kstarrain.api.dto.request.UserQueryReq;
 import com.kstarrain.api.dto.response.UserDTO;
 import com.kstarrain.framework.api.dto.response.PageResultDTO;
+import com.kstarrain.framework.common.utils.*;
+import com.kstarrain.framework.common.utils.extra.Excel;
+import com.kstarrain.framework.web.utils.ResponseUtils;
 import com.kstarrain.provider.constants.Constants;
 import com.kstarrain.provider.enums.AliveFlagEnum;
 import com.kstarrain.provider.exception.BizErrorCode;
@@ -11,9 +14,9 @@ import com.kstarrain.provider.model.UserImportModel;
 import com.kstarrain.provider.persistence.entities.User;
 import com.kstarrain.provider.persistence.mappers.UserMapper;
 import com.kstarrain.provider.service.UserService;
-import com.kstarrain.provider.utils.*;
+import com.kstarrain.provider.utils.PagingUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +84,7 @@ public class UserServiceImpl implements UserService {
 
         // 查询姓名是否已存在于库中
         Map<String, User> existNameUserMap = new HashMap<>();
-        DataPacketUtils.handleSerialize(new ArrayList<>(distinctNameUserModelMap.keySet()), 1000, singleBatchNames -> {
+        BatchUtils.handleSerialize(new ArrayList<>(distinctNameUserModelMap.keySet()), 1000, singleBatchNames -> {
             List<User> existRecords = userMapper.queryByNames(singleBatchNames);
             if (CollectionUtils.isEmpty(existRecords)){return;}
             for (User existRecord : existRecords) {
@@ -105,7 +108,7 @@ public class UserServiceImpl implements UserService {
 
         final int[] successCount = {0};
         if (CollectionUtils.isEmpty(records)){return successCount[0];}
-        DataPacketUtils.handleSerialize(records, 300, singleBatchRecords -> {
+        BatchUtils.handleSerialize(records, 300, singleBatchRecords -> {
             successCount[0] += userMapper.insertBatch(singleBatchRecords);
         });
         return successCount[0];

@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.kstarrain.framework.api.dto.request.BasePageRequest;
 import com.kstarrain.framework.api.dto.response.PageResultDTO;
+import com.kstarrain.framework.common.utils.BeanConvertUtils;
 import com.kstarrain.provider.exception.BizErrorCode;
 import com.kstarrain.provider.exception.BizException;
 import org.apache.commons.lang3.StringUtils;
@@ -48,7 +49,7 @@ public class PagingUtils {
         result.setPageSize(page.getPageSize());
         result.setPageCount(page.getPages());
         result.setTotal(page.getTotal());
-        List<T> list = BeanConvertOldUtils.beanToBeanInList(data, clazz);
+        List<T> list = BeanConvertUtils.beanToBeanInList(data, clazz);
         result.setData(list);
         return result;
     }

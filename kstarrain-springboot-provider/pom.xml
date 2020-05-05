@@ -3,16 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.kstarrain.framework</groupId>
+        <artifactId>kstarrain-framework-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
 
     <groupId>com.kstarrain</groupId>
     <artifactId>kstarrain-springboot-provider</artifactId>
     <version>1.0.0</version>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.4.RELEASE</version>
-    </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,16 +30,25 @@
             <version>1.0.0</version>
         </dependency>
 
-        <!--  web  -->
+        <!-- framework web -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.kstarrain.framework</groupId>
+            <artifactId>kstarrain-framework-web</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
-        <!--  aop  -->
+        <!-- framework swagger -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
+            <groupId>com.kstarrain.framework</groupId>
+            <artifactId>kstarrain-framework-swagger</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- framework elastic job -->
+        <dependency>
+            <groupId>com.kstarrain.framework</groupId>
+            <artifactId>kstarrain-framework-elastic-job</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <!--  test -->
@@ -63,150 +72,18 @@
             <version>1.0.18</version>
         </dependency>
 
-        <!--  mybatis -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-
-        <!-- pageHelper -->
+        <!-- pageHelper (内含 mybatis-spring-boot-starter) -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.10</version>
         </dependency>
 
-        <!-- apache常用工具类(如CollectionUtils、MapUtils) -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>4.1</version>
-        </dependency>
-
-        <!-- apache常用工具类(如StringUtils) -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.8.1</version>
-        </dependency>
-
-        <!-- apache常用工具类(如FileUtils、IOUtils)  -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.6</version>
-        </dependency>
-
-        <!-- bean转换(如ConvertUtils) -->
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.9.3</version>
-        </dependency>
-
-        <!-- fastJson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.68</version>
-        </dependency>
-
-        <!--&lt;!&ndash; cglib (不在spring环境下的BeanCopier包) &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>cglib</groupId>-->
-            <!--<artifactId>cglib-nodep</artifactId>-->
-            <!--<version>2.2.2</version>-->
-        <!--</dependency>-->
-
-
-        <!-- 只能操作 .xls 文件 -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>3.9</version>
-        </dependency>
-
-        <!-- 用于操作 .xlsx .pptx .docx文件 -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>3.9</version>
-        </dependency>
-
-        <!-- 用于操作.csv文件 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-csv</artifactId>
-            <version>1.6</version>
-        </dependency>
-
-        <!-- elastic job调度框架 -->
-        <dependency>
-            <groupId>com.wanda.framework</groupId>
-            <artifactId>wanda-framework-elastic-job</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <!-- swagger-ui  页面地址：http://localhost:8176/kstarrain-springboot/swagger-ui.html#!/ -->
-        <!--<dependency>-->
-            <!--<groupId>io.springfox</groupId>-->
-            <!--<artifactId>springfox-swagger-ui</artifactId>-->
-            <!--<version>2.9.2</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>io.springfox</groupId>-->
-            <!--<artifactId>springfox-bean-validators</artifactId>-->
-            <!--<version>2.9.2</version>-->
-        <!--</dependency>-->
-
-        <!-- swagger-bootstrap-ui 页面好看
-            源码地址：https://github.com/xiaoymin/swagger-bootstrap-ui/
-            页面地址：http://localhost:8176/kstarrain-springboot/doc.html -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>swagger-bootstrap-ui</artifactId>
-            <version>1.9.6</version>
-        </dependency>
-
-
-
     </dependencies>
 
     <build>
         <!-- 打包时生成的名字 -->
         <finalName>kstarrain-springboot-provider</finalName>
-
-        <plugins>
-            <!-- 能够以Maven的方式为应用提供Spring Boot的支持 -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-            <!-- 指定编译的jdk版本 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-
-            <!-- 测试插件 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <!-- 执行test时编码为UTF-8 -->
-                    <argLine>-Dfile.encoding=UTF-8</argLine>
-                    <!-- 忽略单元测试中的错误继续构建工程 -->
-                    <testFailureIgnore>true</testFailureIgnore>
-                </configuration>
-            </plugin>
-        </plugins>
 
 
         <!-- 参考文档 https://www.cnblogs.com/dreamroute/p/6729147.html-->
@@ -215,7 +92,7 @@
                                      还会把src/main/resources目录中的文件复制到target/classes目录中。
              有时候有些配置文件通常与.java文件一起放在src/main/java目录下（如mybatis表映射xml文件）。这些情况下就需要在pom.xml文件中添加<resources>。 -->
         <resources>
-            <!-- resourcec参考文档 https://blog.csdn.net/newbie_907486852/article/details/81205532
+            <!-- resources参考文档 https://blog.csdn.net/newbie_907486852/article/details/81205532
                                   https://blog.csdn.net/zht741322694/article/details/78676662-->
             <resource>
                 <!-- 指定resources插件处理哪个目录下的资源文件 -->

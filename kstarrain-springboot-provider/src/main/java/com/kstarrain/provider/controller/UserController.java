@@ -5,7 +5,7 @@ import com.kstarrain.api.dto.response.UserDTO;
 import com.kstarrain.api.url.UrlMapping;
 import com.kstarrain.framework.api.dto.response.PageResultDTO;
 import com.kstarrain.framework.api.dto.response.ResultDTO;
-import com.kstarrain.provider.aspect.annotation.PrintAspectLog;
+import com.kstarrain.framework.web.aspect.annotation.PrintAspectLog;
 import com.kstarrain.provider.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

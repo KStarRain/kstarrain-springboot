@@ -2,6 +2,7 @@ package com.kstarrain.api.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kstarrain.framework.api.dto.request.BasePageRequest;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
+@ApiModel("用户筛选条件")
 public class UserQueryReq extends BasePageRequest {
 
 	@ApiModelProperty(value = "姓名", required = true, example = "貂蝉", position = 1)

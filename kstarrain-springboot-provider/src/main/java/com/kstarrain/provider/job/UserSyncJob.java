@@ -2,7 +2,7 @@ package com.kstarrain.provider.job;
 
 import com.dangdang.ddframe.job.api.ShardingContext;
 import com.dangdang.ddframe.job.api.simple.SimpleJob;
-import com.wanda.framework.elastic.job.annotation.ElasticJobScheduled;
+import com.kstarrain.framework.elastic.job.annotation.ElasticJobScheduled;
 import lombok.extern.slf4j.Slf4j;
 
 /**
