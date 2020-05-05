@@ -2,10 +2,9 @@ package com.kstarrain.provider.exception.handler;
 
 import com.kstarrain.framework.api.dto.response.ResultDTO;
 import com.kstarrain.framework.common.utils.JacksonUtils;
+import com.kstarrain.framework.web.enums.LogKeyEnum;
+import com.kstarrain.framework.web.exception.BizException;
 import com.kstarrain.framework.web.utils.RequestUtils;
-import com.kstarrain.provider.enums.LogKeyEnum;
-import com.kstarrain.provider.exception.BizErrorCode;
-import com.kstarrain.provider.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.boot.autoconfigure.web.AbstractErrorController;
@@ -45,8 +44,8 @@ public class GlobalExceptionHandler extends AbstractErrorController {
 
             ResultDTO result = new ResultDTO();
             result.setSuccess(false);
-            result.setCode(BizErrorCode.SYSTEM_ERROR.getCode());
-            result.setMessage(BizErrorCode.SYSTEM_ERROR.getMessage());
+            result.setCode("SYSTEM ERROR");
+            result.setMessage("系统异常");
 
             if (e == null) {
                 log.error("【filter-系统异常】-- url:{},  异常信息：{}", url, JacksonUtils.toJSONString(attributes));
@@ -64,8 +63,6 @@ public class GlobalExceptionHandler extends AbstractErrorController {
             MDC.remove(LogKeyEnum.REQUEST_ID.getCode());
         }
     }
-
-
 
 
 

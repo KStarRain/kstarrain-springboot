@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
@@ -81,8 +82,8 @@ public class UserController {
      */
     @ApiOperation(value = "测试 application/x-www-form-urlencoded")
     @PostMapping(value = "/test1", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResultDTO<Integer> test1(@RequestParam("a") String a,
-                                   @RequestParam("b") String b) {
+    public ResultDTO<Integer> test1(HttpServletRequest request, @RequestParam("a") String a,
+                                    @RequestParam("b") String b) {
         log.info("a:{},b:{}",a,b);
         return new ResultDTO<>();
     }
