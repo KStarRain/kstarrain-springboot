@@ -37,12 +37,16 @@
             <version>1.0.0</version>
         </dependency>
 
-        <!-- framework swagger -->
+        <!-- knife4j swagger
+            该页面比原生swagger-ui好看
+            官方地址：https://doc.xiaominfo.com/
+            页面地址：http://{host}:{port}/{contextPath}/doc.html -->
         <dependency>
-            <groupId>com.kstarrain.framework</groupId>
-            <artifactId>kstarrain-framework-swagger</artifactId>
-            <version>1.0.0</version>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>2.0.2</version>
         </dependency>
+
 
         <!-- framework elastic job -->
         <dependency>
@@ -65,12 +69,21 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- 德鲁伊 连接池-->
+        <!-- druid 连接池
+                源码： https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter
+                控制台：http://{host}:{port}/{contextPath}/druid/index.html -->
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.0.18</version>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.6</version>
         </dependency>
+
+        <!-- 德鲁伊 连接池-->
+        <!--<dependency>-->
+            <!--<groupId>com.alibaba</groupId>-->
+            <!--<artifactId>druid</artifactId>-->
+            <!--<version>1.0.18</version>-->
+        <!--</dependency>-->
 
         <!-- pageHelper (内含 mybatis-spring-boot-starter) -->
         <dependency>

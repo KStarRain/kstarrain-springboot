@@ -22,6 +22,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -50,6 +51,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public int importUser(MultipartFile file) throws ParseException, ReflectiveOperationException, IOException {
 
         if (file == null || file.isEmpty()){

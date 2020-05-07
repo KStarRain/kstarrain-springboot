@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
  * @description:
  */
 @Slf4j
+//@ElasticJobScheduled(name = "UserSyncJob", cron = "0/10 * * * * ?", description = "同步用户信息")
 @ElasticJobScheduled(name = "UserSyncJob", cron = "0/10 * * * * ?", description = "同步用户信息", eventDataSourceBeanName = "jobEventDataSource")
 public class UserSyncJob implements SimpleJob {
     @Override

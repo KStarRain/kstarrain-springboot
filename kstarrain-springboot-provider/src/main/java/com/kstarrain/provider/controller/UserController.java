@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
@@ -74,30 +73,6 @@ public class UserController {
     public void exportUserList(@ApiParam("导出条件") @RequestBody UserQueryReq requestBody,
                                HttpServletResponse response) throws IOException, ReflectiveOperationException {
         userService.exportUserList(requestBody, response);
-    }
-
-    /**
-     * 导入用户数据
-     * @return
-     */
-    @ApiOperation(value = "测试 application/x-www-form-urlencoded")
-    @PostMapping(value = "/test1", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResultDTO<Integer> test1(HttpServletRequest request, @RequestParam("a") String a,
-                                    @RequestParam("b") String b) {
-        log.info("a:{},b:{}",a,b);
-        return new ResultDTO<>();
-    }
-
-    /**
-     * 导入用户数据
-     * @return
-     */
-    @ApiOperation(value = "测试 multipart/form-data")
-    @PostMapping(value = "/test2", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResultDTO<Integer> test2(@RequestParam("a") String a,
-                                   @RequestParam("b") String b) {
-        log.info("a:{},b:{}",a,b);
-        return new ResultDTO<>();
     }
 
 }
