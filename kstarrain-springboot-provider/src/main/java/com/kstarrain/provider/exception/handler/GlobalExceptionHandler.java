@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * @author: Dong Yu
  * @create: 2019-07-25 14:35
- * @description: 全局异常处理（包含filter异常）
+ * @description: 全局异常处理（controller外更大范围的异常）
  */
 @Slf4j
 @RestController
@@ -48,13 +48,15 @@ public class GlobalExceptionHandler extends AbstractErrorController {
             result.setMessage("系统异常");
 
             if (e == null) {
-                log.error("【filter-系统异常】-- url:{},  异常信息：{}", url, JacksonUtils.toJSONString(attributes));
+                result.setCode(attributes.get("error").toString());
+                result.setMessage(attributes.get("message").toString());
+                log.error("【全局-未知异常】-- url:{},  异常信息：{}", url, JacksonUtils.toJSONString(attributes));
             } else if (e instanceof BizException) {
                 result.setCode(((BizException) e).getErrorCode());
                 result.setMessage(((BizException) e).getErrorMessage());
-                log.error("【filter-业务异常】-- url:{},  异常信息：[{}] [{}]", url, ((BizException) e).getErrorCode(),((BizException) e).getErrorMessage());
+                log.error("【全局-业务异常】-- url:{},  异常信息：[{}] [{}]", url, ((BizException) e).getErrorCode(),((BizException) e).getErrorMessage());
             } else {
-                log.error("【filter-系统异常】-- url:{},  异常信息：{}", url, e.getMessage(), e);
+                log.error("【全局-系统异常】-- url:{},  异常信息：{}", url, e.getMessage(), e);
             }
 
             return ResponseEntity.ok().body(result);

@@ -37,10 +37,7 @@
             <version>1.0.0</version>
         </dependency>
 
-        <!-- knife4j swagger
-            该页面比原生swagger-ui好看
-            官方地址：https://doc.xiaominfo.com/
-            页面地址：http://{host}:{port}/{contextPath}/doc.html -->
+        <!-- knife4j swagger ui  官方地址：https://doc.xiaominfo.com/ -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
@@ -69,27 +66,24 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- druid 连接池
-                源码： https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter
-                控制台：http://{host}:{port}/{contextPath}/druid/index.html -->
+        <!-- druid 连接池  源码： https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.6</version>
         </dependency>
 
-        <!-- 德鲁伊 连接池-->
-        <!--<dependency>-->
-            <!--<groupId>com.alibaba</groupId>-->
-            <!--<artifactId>druid</artifactId>-->
-            <!--<version>1.0.18</version>-->
-        <!--</dependency>-->
-
         <!-- pageHelper (内含 mybatis-spring-boot-starter) -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.10</version>
+        </dependency>
+
+        <!-- redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
     </dependencies>

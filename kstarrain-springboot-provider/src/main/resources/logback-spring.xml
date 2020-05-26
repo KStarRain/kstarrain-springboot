@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
-    <!--<include resource="org/springframework/boot/logging/logback/console-appender.xml" />-->
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
     <!-- 日志中含有request_id变量，通过代码MDC.put("request_id","xxxxxx");设置 -->
-
-    <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} [REQ-%X{request_id}] %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+    <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}\\(%L\\)){cyan} %clr(:){faint} [REQ-%X{request_id}] %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
@@ -14,11 +13,9 @@
     </appender>
 
 
-    <!-- 输出文件中含有ReqId变量，通过代码MDC.put("reqId","xxxxxx");设置 -->
-    <!--<property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] \\(%c.%M:%L\\) : [W-%X{wechatUserId}] [U-%X{userId}] %m%n"/>-->
-    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p  --- [%15.15t] %-40.40logger{39} : [REQ-%X{request_id}]  %m%n" />
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] \\(%c.%M:%L\\) : [REQ-%X{request_id}] %m%n"/>
     <springProfile name="local,dev">
-        <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p  --- [%15.15t] %-40.40logger{39} : [REQ-%X{request_id}] %m%n" />
+        <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p  --- [%15.15t] %-40.40logger{39}\\(%L\\) : [REQ-%X{request_id}] %m%n" />
     </springProfile>
 
     <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>

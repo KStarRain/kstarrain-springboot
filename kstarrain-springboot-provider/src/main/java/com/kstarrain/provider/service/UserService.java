@@ -20,5 +20,9 @@ public interface UserService {
 
     PageResultDTO<UserDTO> queryUserPageList(UserQueryReq requestBody);
 
+    UserDTO queryUserDetailById(Integer id);
+
     void exportUserList(UserQueryReq requestBody, HttpServletResponse response) throws ReflectiveOperationException, IOException;
+
+
 }

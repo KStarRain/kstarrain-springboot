@@ -10,6 +10,7 @@ public class UrlMapping {
 
     public static final String USER_IMPORT      =   API_URL_PREFIX + "/user/import";
     public static final String USER_LIST        =   API_URL_PREFIX + "/user/list";
+    public static final String USER_DETAIL      =   API_URL_PREFIX + "/user/detail";
     public static final String USER_EXPORT      =   API_URL_PREFIX + "/user/export";
 
 }

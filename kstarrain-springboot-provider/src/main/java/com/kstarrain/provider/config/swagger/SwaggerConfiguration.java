@@ -49,7 +49,7 @@ public class SwaggerConfiguration {
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class)) // 扫描注解
                 .paths(PathSelectors.any())
                 .build().apiInfo(this.apiInfo(swaggerProperties)) // 用于定义api文档汇总信息
-//                        .useDefaultResponseMessages(false)
+                        .useDefaultResponseMessages(false)
 //                        .globalResponseMessage(RequestMethod.OPTIONS, responseMessages)
 //                        .globalResponseMessage(RequestMethod.GET, responseMessages)
 //                        .globalResponseMessage(RequestMethod.POST, responseMessages)

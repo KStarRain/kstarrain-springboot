@@ -14,14 +14,23 @@ import java.util.List;
 
 public class PagingUtils {
 
-    public static void startPage(BasePageRequest pageInfo) {
-        PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize(), true);
-        if (StringUtils.isNotBlank(pageInfo.getOrderBy())) {
-            PageHelper.orderBy(pageInfo.getOrderBy());
-        }
-
+    public static void startPageHelper(BasePageRequest pageInfo) {
+        startPageHelper(pageInfo, true);
     }
 
+    public static void startPageHelper(BasePageRequest pageInfo, boolean count) {
+        PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize(), count);
+        if (StringUtils.isNotBlank(pageInfo.getOrderBy())) {
+            StringBuilder orderBy = new StringBuilder();
+            orderBy.append(pageInfo.getOrderBy());
+            if (pageInfo.isAsc()) {
+                orderBy.append(" ASC");
+            } else {
+                orderBy.append(" DESC");
+            }
+            PageHelper.orderBy(orderBy.toString());
+        }
+    }
 
     public static <T> PageResultDTO<T> handleResult(List<T> data) {
         if (!(data instanceof Page)) {

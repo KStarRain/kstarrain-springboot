@@ -3,6 +3,7 @@ package com.kstarrain.provider.job;
 import com.dangdang.ddframe.job.api.ShardingContext;
 import com.dangdang.ddframe.job.api.simple.SimpleJob;
 import com.kstarrain.framework.elastic.job.annotation.ElasticJobScheduled;
+import com.kstarrain.framework.web.utils.LogUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -16,6 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 public class UserSyncJob implements SimpleJob {
     @Override
     public void execute(ShardingContext shardingContext) {
-        log.info("================同步用户信息=================");
+
+        for (int i = 0; i < 5; i++) {
+            LogUtils.reqIdLogAround(() -> {
+                log.info("================同步用户信息开始=================");
+                log.info("================同步用户信息结束=================");
+            });
+
+        }
+
     }
 }

@@ -19,8 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +35,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: DongYu
@@ -42,6 +45,9 @@ import java.util.*;
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @Value("${download.temp.path}")
     private String downloadTempPath;
@@ -121,9 +127,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public PageResultDTO<UserDTO> queryUserPageList(UserQueryReq requestBody) {
         User criteria = BeanConvertUtils.beanToBean(requestBody, User.class);
-        PagingUtils.startPage(requestBody.toPageInfo());
+        PagingUtils.startPageHelper(requestBody.toPageInfo());
         List<User> users = userMapper.querySelective(criteria);
         return PagingUtils.handleResult(users, UserDTO.class);
+    }
+
+    @Override
+    public UserDTO queryUserDetailById(Integer id) {
+        String key = "user" + id;
+        String userStr = stringRedisTemplate.opsForValue().get(key);
+        if (StringUtils.isNotBlank(userStr)){
+            return JacksonUtils.parseObject(userStr, UserDTO.class);
+        }
+
+        User user = userMapper.queryByPrimaryKey(id);
+        if (user == null){return null;}
+
+        UserDTO userDTO = BeanConvertUtils.beanToBean(user, UserDTO.class);
+        stringRedisTemplate.opsForValue().set(key, JacksonUtils.toJSONString(userDTO), 2, TimeUnit.MINUTES);
+        return userDTO;
     }
 
 
